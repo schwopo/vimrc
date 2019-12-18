@@ -1,4 +1,5 @@
 " Set 'nocompatible' to ward off unexpected things that your distro might
+" 
 " have made, as well as sanely reset options when re-sourcing .vimrc
 set nocompatible
  
@@ -9,7 +10,6 @@ filetype indent plugin on
  
 " Enable syntax highlighting
 syntax on
- 
  
 "------------------------------------------------------------
 " Must have options {{{1
@@ -92,7 +92,7 @@ set visualbell
 "set t_vb=
  
 " Enable use of the mouse for all modes
-set mouse=a
+"set mouse=a
  
 " Set the command window height to 2 lines, to avoid many cases of having to
 " "press <Enter> to continue"
@@ -125,13 +125,29 @@ Plugin 'junegunn/goyo.vim'
 Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/seoul256.vim'
 Plugin 'dracula/vim'
+Plugin 'scrooloose/syntastic'
 Plugin 'lervag/vimtex'
+Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plugin 'https://github.com/Shougo/neoinclude.vim/'
+Plugin 'zchee/deoplete-clang'
+Plugin 'deoplete-plugins/deoplete-jedi'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
-color seoul256
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-8/lib/libclang.so'
+
+let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
+let g:neoinclude#paths = {'c': '/usr/include'}
+
+"color seoul256
+color dracula
 set cursorline
 set cursorcolumn
+set splitbelow
 nnoremap <space> <nop>
+inoremap <C-j> <C-n>
+inoremap <C-k> <C-p>
 let mapleader=" "
 let maplocalleader=" "
