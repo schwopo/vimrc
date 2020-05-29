@@ -1,153 +1,99 @@
-" Set 'nocompatible' to ward off unexpected things that your distro might
-" 
-" have made, as well as sanely reset options when re-sourcing .vimrc
+" ------ CONFIG ------
 set nocompatible
- 
-" Attempt to determine the type of a file based on its name and possibly its
-" contents. Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific.
 filetype indent plugin on
- 
-" Enable syntax highlighting
 syntax on
- 
-"------------------------------------------------------------
-" Must have options {{{1
-"
-" These are highly recommended options.
- 
-" Vim with default settings does not allow easy switching between multiple files
-" in the same editor window. Users can use multiple split windows or multiple
-" tab pages to edit multiple files, but it is still best to enable an option to
-" allow easier switching between files.
-"
-" One such option is the 'hidden' option, which allows you to re-use the same
-" window and switch from an unsaved buffer without saving it first. Also allows
-" you to keep an undo history for multiple files when re-using the same window
-" in this way. Note that using persistent undo also lets you undo in multiple
-" files even in the same window, but is less efficient and is actually designed
-" for keeping undo history after closing Vim entirely. Vim will complain if you
-" try to quit without saving, and swap files will keep you safe if your computer
-" crashes.
 set hidden
- 
-" Note that not everyone likes working this way (with the hidden option).
-" Alternatives include using tabs or split windows instead of re-using the same
-" window as mentioned above, and/or either of the following options:
-" set confirm
-" set autowriteall
- 
-" Better command-line completion
 set wildmenu
- 
-" Show partial commands in the last line of the screen
 set showcmd
- 
-" Highlight searches (use <C-L> to temporarily turn off highlighting; see the
-" mapping of <C-L> below)
 set hlsearch
- 
-" Modelines have historically been a source of security vulnerabilities. As
-" such, it may be a good idea to disable them and use the securemodelines
-" script, <http://www.vim.org/scripts/script.php?script_id=1876>.
-" set nomodeline
- 
- 
-"------------------------------------------------------------
-" Usability options {{{1
-"
-" These are options that users frequently set in their .vimrc. Some of them
-" change Vim's behaviour in ways which deviate from the true Vi way, but
-" which are considered to add usability. Which, if any, of these options to
-" use is very much a personal preference, but they are harmless.
- 
-" Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
  
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
- 
-" When opening a new line and no filetype-specific indenting is enabled, keep
-" the same indent as the line you're currently on. Useful for READMEs, etc.
-set autoindent
 
-" Display the cursor position on the last line of the screen or in the status
-" line of a window
+set autoindent
 set ruler
- 
-" Always display the status line, even if only one window is displayed
 set laststatus=2
- 
-" Instead of failing a command because of unsaved changes, instead raise a
-" dialogue asking if you wish to save changed files.
+set showtabline=2
+set splitbelow
 set confirm
- 
-" Use visual bell instead of beeping when doing something wrong
 set visualbell
- 
-" And reset the terminal code for the visual bell. If visualbell is set, and
-" this line is also included, vim will neither flash nor beep. If visualbell
-" is unset, this does nothing.
-"set t_vb=
- 
-" Enable use of the mouse for all modes
-"set mouse=a
- 
-" Set the command window height to 2 lines, to avoid many cases of having to
-" "press <Enter> to continue"
-set cmdheight=2
- 
-" Display line numbers on the left
+" set cmdheight=2
 set number
- 
+
 " Quickly time out on keycodes, but never time out on mappings
 set notimeout ttimeout ttimeoutlen=200
  
-" Use <F11> to toggle between 'paste' and 'nopaste'
 set pastetoggle=<F11>
 set shiftwidth=4
 set softtabstop=4
 set expandtab
- 
- 
-" Map <C-L> (redraw screen) to also turn off search highlighting until thedracula
-" next search
 nnoremap <C-L> :nohl<CR><C-L>
  
+" ------   VUNDLE ------
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" let Vundle manage Vundle, required
+
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'junegunn/goyo.vim'
 Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/seoul256.vim'
 Plugin 'dracula/vim'
+Plugin 'itchyny/lightline.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'lervag/vimtex'
+Plugin 'jlanzarotta/bufexplorer'
 Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plugin 'https://github.com/Shougo/neoinclude.vim/'
-Plugin 'zchee/deoplete-clang'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
+Plugin 'jiangmiao/auto-pairs'
+"Plugin 'zchee/deoplete-clang'
 Plugin 'deoplete-plugins/deoplete-jedi'
-
-" All of your Plugins must be added before the following line
 call vundle#end()            " required
 
+" ------ PLUGINS ------
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-8/lib/libclang.so'
+autocmd CompleteDone * silent! pclose!
 
-let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
-let g:neoinclude#paths = {'c': '/usr/include'}
+let g:bufExplorerShowNoName=1 "show empty buffers
 
-"color seoul256
-color dracula
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+
+set noshowmode
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }
+
+color seoul256
+"color dracula
 set cursorline
-set cursorcolumn
-set splitbelow
+
+" ------ MAPPINGS ------
+let mapleader=" "
 nnoremap <space> <nop>
+
+"autocomplete popup
 inoremap <C-j> <C-n>
 inoremap <C-k> <C-p>
-let mapleader=" "
-let maplocalleader=" "
+
+"faster buffers
+nnoremap <leader>jk :ToggleBufExplorer<CR>
+nnoremap <leader>jj :bn<CR>
+nnoremap <leader>jj :bn<CR>
+nnoremap <leader>kk :bp<CR>
+
+"tabs
+nnoremap <leader>ll gt
+nnoremap <leader>LL :tabm +1<CR>
+nnoremap <leader>hh gT
+nnoremap <leader>HH :tabm -1<CR>
+nnoremap <leader>oo :tabe<CR>
+
+nnoremap <leader>ee :Explore<CR>
+nnoremap <leader>RR :source ~/.vimrc<CR>
+nnoremap Q :q<CR>
