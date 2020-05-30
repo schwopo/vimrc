@@ -31,7 +31,10 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 nnoremap <C-L> :nohl<CR><C-L>
- 
+
+"terminal
+autocmd TermClose * silent! bw! "close terminal w/o confirm
+
 " ------   VUNDLE ------
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -40,21 +43,27 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'junegunn/goyo.vim'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
+Plugin 'jiangmiao/auto-pairs'
+
 Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/seoul256.vim'
 Plugin 'mightwork/summerfruit256.vim'
 Plugin 'dracula/vim'
+
 Plugin 'itchyny/lightline.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'lervag/vimtex'
 Plugin 'jlanzarotta/bufexplorer'
+
+Plugin 'lervag/vimtex'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plugin 'https://github.com/Shougo/neoinclude.vim/'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-surround'
-Plugin 'jiangmiao/auto-pairs'
+Plugin 'Shougo/neoinclude.vim'
 "Plugin 'zchee/deoplete-clang'
 Plugin 'deoplete-plugins/deoplete-jedi'
+" Plugin 'lionawurscht/deoplete-biblatex'
+Plugin 'Shougo/neco-vim'
+
 call vundle#end()            " required
 
 " ------ PLUGINS ------
