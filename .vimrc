@@ -17,6 +17,7 @@ set ruler
 set laststatus=2
 set showtabline=2
 set splitbelow
+set splitright
 set confirm
 set visualbell
 " set cmdheight=2
@@ -41,6 +42,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'junegunn/goyo.vim'
 Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/seoul256.vim'
+Plugin 'mightwork/summerfruit256.vim'
 Plugin 'dracula/vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'scrooloose/syntastic'
@@ -57,14 +59,15 @@ call vundle#end()            " required
 
 " ------ PLUGINS ------
 let g:deoplete#enable_at_startup = 1
-autocmd CompleteDone * silent! pclose!
+autocmd CompleteDone * silent! pclose! "schließe popup fenster
 
 let g:bufExplorerShowNoName=1 "show empty buffers
+let g:bufExplorerFindActive=1 "useful wenn tabs unübersichtlich werden
 
-let g:netrw_liststyle = 3
+let g:netrw_liststyle = 3 "tree view
 let g:netrw_banner = 0
 
-set noshowmode
+set noshowmode "in lightline enthalten
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ }
@@ -81,19 +84,38 @@ nnoremap <space> <nop>
 inoremap <C-j> <C-n>
 inoremap <C-k> <C-p>
 
-"faster buffers
+"buffers
 nnoremap <leader>jk :ToggleBufExplorer<CR>
-nnoremap <leader>jj :bn<CR>
-nnoremap <leader>jj :bn<CR>
-nnoremap <leader>kk :bp<CR>
 
 "tabs
-nnoremap <leader>ll gt
-nnoremap <leader>LL :tabm +1<CR>
-nnoremap <leader>hh gT
-nnoremap <leader>HH :tabm -1<CR>
-nnoremap <leader>oo :tabe<CR>
+nnoremap <left> gt
+nnoremap <S-left> :tabm +1<CR>
+nnoremap <right> gT
+nnoremap <S-right> :tabm -1<CR>
+nnoremap <leader>et :tabe<CR>
+
+"windows
+"cycle windows
+nnoremap <up> <C-w>w 
+nnoremap <down> <C-w>W
+
+"terminal
+tnoremap <Esc> <C-\><C-n>
+"bash
+nnoremap ts :sp term://bash<CR>
+nnoremap tv :vsp term://bash<CR>
+nnoremap tt :tabe term://bash<CR>
+nnoremap th :e term://bash<CR>
+"python interactive
+nnoremap tps :sp term://python3 -i<CR>
+nnoremap tpv :vsp term://python3 -i<CR>
+nnoremap tpt :tabe term://python3 -i<CR>
+nnoremap tph :e term://python3 -i<CR>
 
 nnoremap <leader>ee :Explore<CR>
 nnoremap <leader>RR :source ~/.vimrc<CR>
 nnoremap Q :q<CR>
+nnoremap <leader>j m
+nnoremap <leader>k '
+nnoremap <leader>l $
+nnoremap <leader>h 0
